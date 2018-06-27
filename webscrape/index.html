@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Visual word count</title>
+       <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
+        <script src="./require.js"></script>
+         <input type="file" id="fileinput" />
+         <script>
+            var c = "";
+             var d = [];
+             var l = []
+             function readSingleFile(evt) {
+                    //Retrieve the first (and only!) File from the FileList object
+                    var f = evt.target.files[0]; 
+
+                    if (f) {
+                      var r = new FileReader();
+                      r.onload = function(e) { 
+                          var contents = e.target.result;
+                          c = contents;
+                           l = c.split('\n');
+               
+                          init();
+                        alert( "Got the file.n" 
+                              +"name: " + f.name + "n"
+                              +"type: " + f.type + "n"
+                              +"size: " + f.size + " bytesn"
+                              + "starts with: " + contents.substr(1, contents.indexOf("n"))
+                        );  
+                      }
+                      r.readAsText(f);
+                    } else { 
+                      alert("Failed to load file");
+                    }
+                  }
+             document.getElementById('fileinput').addEventListener('change', readSingleFile, false);
+           
+              function init() {
+                //var canvas = document.getElementById("myCanvas");
+                //var canvas = document.getElementById("myCanvas");
+              //  var json = require('./wordcount.json')
+               // var rU = "./wordcount.json";
+                //var req = new XMLHttpRequest();
+               // req.open('GET')
+                   
+                //var wordcount = "wordcount.json";
+               // var wordCount = JSON.parse(wordcount);
+                  
+                 for(var i = 0; i < l.length; i++){
+                    j = l[i].split(' ');
+                    if( j.length > 1){
+                        if(parseInt(j[1])> 5){
+                             d.push({
+                            key: j[0],
+                            value: j[1]
+                        });
+                        }
+                       
+                        //d[n[0]] = n[2];
+                    }
+                }
+                var stage = new createjs.Stage("myCanvas")
+                var count = 1;
+                for(var f = 0; f< d.length; f++){
+                    //Console.Log(key.key)
+                     num = parseInt(d[f].value)*5;
+                     text = new createjs.Text(d[f].key, num.toString()+"px Arial", "#ff7700")
+                    text.x = 50;
+                    text.y = 100*count;
+                    count++;
+                    stage.addChild(text);
+                    stage.update();
+                }
+               
+            }
+            
+        </script>
+    </head>
+    <body>
+       
+        <canvas id="myCanvas" width="1000" height="5000"></canvas>
+       
+        
+    </body>
+</html>
